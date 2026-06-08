@@ -37,11 +37,11 @@ export function SplitText({ text, className, style, delay = 0, as = "h2" }: Spli
     return () => io.disconnect();
   }, [delay, text]);
 
-  const Tag = as as keyof React.JSX.IntrinsicElements;
+  const Tag = as as any;
   const words = text.split(" ");
 
   return (
-    <Tag ref={ref as React.Ref<HTMLElement>} className={className} style={style}>
+    <Tag ref={ref as any} className={className} style={style}>
       {words.map((word, wi) => (
         <span key={wi} className="inline-block whitespace-nowrap">
           {Array.from(word).map((ch, ci) => (

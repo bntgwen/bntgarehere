@@ -1,14 +1,68 @@
+import { useRef, useCallback } from "react";
+import {
+  Camera, Moon, Headphones, Mountain, PenTool, Sliders,
+  FileCode2, Atom, Globe, Layers, Palette, Server,
+  Terminal, Database, Paintbrush, Box, Cuboid, Activity,
+  type LucideIcon,
+} from "lucide-react";
 import { SplitText } from "./SplitText";
 
-const tech = [
-  "typescript", "react", "next.js", "tanstack", "tailwind", "node",
-  "python", "postgres", "figma", "webgl", "blender", "framer motion",
+interface HobbyItem {
+  label: string;
+  meta: string;
+  icon: LucideIcon;
+}
+
+const hobbies: HobbyItem[] = [
+  { label: "shooting film", meta: "photography", icon: Camera },
+  { label: "late-night code", meta: "development", icon: Moon },
+  { label: "lo-fi playlists", meta: "music", icon: Headphones },
+  { label: "weekend hikes", meta: "nature", icon: Mountain },
+  { label: "writing essays", meta: "prose", icon: PenTool },
+  { label: "tinkering with synths", meta: "sound", icon: Sliders },
 ];
 
-const hobbies = [
-  "shooting film", "late-night code", "lo-fi playlists",
-  "weekend hikes", "writing essays", "tinkering with synths",
+interface TechItem {
+  label: string;
+  meta: string;
+  icon: LucideIcon;
+}
+
+const tech: TechItem[] = [
+  { label: "typescript", meta: "language", icon: FileCode2 },
+  { label: "react", meta: "framework", icon: Atom },
+  { label: "next.js", meta: "framework", icon: Globe },
+  { label: "tanstack", meta: "data", icon: Layers },
+  { label: "tailwind", meta: "styling", icon: Palette },
+  { label: "node", meta: "runtime", icon: Server },
+  { label: "python", meta: "language", icon: Terminal },
+  { label: "postgres", meta: "database", icon: Database },
+  { label: "figma", meta: "design", icon: Paintbrush },
+  { label: "webgl", meta: "graphics", icon: Box },
+  { label: "blender", meta: "3d", icon: Cuboid },
+  { label: "framer motion", meta: "animation", icon: Activity },
 ];
+
+function GlowCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    el.style.setProperty("--mx", `${x}%`);
+    el.style.setProperty("--my", `${y}%`);
+  }, []);
+
+  return (
+    <div ref={ref} onMouseMove={onMove} className={`card-item ${className}`}>
+      <div className="card-glow" />
+      {children}
+    </div>
+  );
+}
 
 export function Welcome() {
   return (
@@ -35,27 +89,38 @@ export function Welcome() {
 
           <div className="reveal md:col-span-4 md:col-start-9">
             <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">hobbies</div>
-            <ul className="space-y-3 text-white/70" style={{ fontWeight: 200 }}>
-              {hobbies.map((h) => (
-                <li key={h} className="border-b border-white/10 pb-3 text-base">
-                  — {h}
-                </li>
-              ))}
-            </ul>
+            <div className="card-grid grid-cols-1 sm:grid-cols-2">
+              {hobbies.map((h) => {
+                const Icon = h.icon;
+                return (
+                  <GlowCard key={h.label}>
+                    <div className="card-icon">
+                      <Icon size={20} strokeWidth={1.5} className="text-white/70" />
+                    </div>
+                    <div className="card-label">{h.label}</div>
+                    <div className="card-meta">{h.meta}</div>
+                  </GlowCard>
+                );
+              })}
+            </div>
           </div>
         </div>
 
         <div className="reveal mt-32">
           <div className="mb-8 text-[10px] tracking-[0.4em] text-white/40">stack</div>
-          <div className="flex flex-wrap gap-x-8 gap-y-4 text-[clamp(1.2rem,3vw,2.4rem)] text-white/90"
-               style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}>
-            {tech.map((t, i) => (
-              <span key={t} className="opacity-90 transition-opacity hover:opacity-100"
-                    style={{ transitionDelay: `${i * 30}ms` }}>
-                {t}
-                {i < tech.length - 1 && <span className="ml-8 text-white/20">/</span>}
-              </span>
-            ))}
+          <div className="card-grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+            {tech.map((t) => {
+              const Icon = t.icon;
+              return (
+                <GlowCard key={t.label}>
+                  <div className="card-icon">
+                    <Icon size={20} strokeWidth={1.5} className="text-white/70" />
+                  </div>
+                  <div className="card-label">{t.label}</div>
+                  <div className="card-meta">{t.meta}</div>
+                </GlowCard>
+              );
+            })}
           </div>
         </div>
       </div>

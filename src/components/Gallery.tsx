@@ -1,3 +1,6 @@
+import { useRef, useCallback } from "react";
+import { Monitor, Laptop, Camera, AudioLines, Pen, type LucideIcon } from "lucide-react";
+
 const images = [
   { src: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&q=80", h: "tall" },
   { src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80", h: "short" },
@@ -9,10 +12,49 @@ const images = [
 
 const hMap = { tall: "h-[480px]", medium: "h-[340px]", short: "h-[240px]" } as const;
 
-const gear = {
-  hardware: ["macbook pro 16″ m3", "apple studio display", "leica q3", "moog matriarch", "wacom intuos pro"],
-  software: ["figma", "vs code", "blender", "ableton live", "adobe lightroom"],
-};
+interface GearItem {
+  label: string;
+  meta: string;
+  icon: LucideIcon;
+  img: string;
+}
+
+const hardware: GearItem[] = [
+  { label: "macbook pro 16″ m3", meta: "primary machine", icon: Laptop, img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=600&q=80" },
+  { label: "apple studio display", meta: "5k retina", icon: Monitor, img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&q=80" },
+  { label: "leica q3", meta: "compact camera", icon: Camera, img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&q=80" },
+  { label: "moog matriarch", meta: "analog synth", icon: AudioLines, img: "https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=600&q=80" },
+  { label: "wacom intuos pro", meta: "pen tablet", icon: Pen, img: "https://images.unsplash.com/photo-1585792180666-f7347f49048d?w=600&q=80" },
+];
+
+const software: GearItem[] = [
+  { label: "figma", meta: "interface design", icon: Pen, img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80" },
+  { label: "vs code", meta: "code editor", icon: Laptop, img: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=600&q=80" },
+  { label: "blender", meta: "3d creation", icon: Monitor, img: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&q=80" },
+  { label: "ableton live", meta: "music production", icon: AudioLines, img: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=80" },
+  { label: "adobe lightroom", meta: "photo editing", icon: Camera, img: "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=600&q=80" },
+];
+
+function GlowCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    el.style.setProperty("--mx", `${x}%`);
+    el.style.setProperty("--my", `${y}%`);
+  }, []);
+
+  return (
+    <div ref={ref} onMouseMove={onMove} className={`card-item ${className}`}>
+      <div className="card-glow" />
+      {children}
+    </div>
+  );
+}
 
 export function Gallery() {
   return (
@@ -43,17 +85,54 @@ export function Gallery() {
         <div className="mt-32 grid grid-cols-1 gap-16 md:grid-cols-2">
           <div className="reveal">
             <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">hardware</div>
-            <ul className="space-y-3 text-2xl text-white/85 sm:text-3xl"
-                style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}>
-              {gear.hardware.map((g) => <li key={g} className="border-b border-white/10 pb-3">{g}</li>)}
-            </ul>
+            <div className="card-grid grid-cols-1 sm:grid-cols-2">
+              {hardware.map((g) => {
+                const Icon = g.icon;
+                return (
+                  <GlowCard key={g.label}>
+                    <div className="mb-4 overflow-hidden rounded-lg border border-white/10">
+                      <img
+                        src={g.img}
+                        alt={g.label}
+                        loading="lazy"
+                        className="h-28 w-full object-cover transition-transform duration-700 ease-out hover:scale-110"
+                      />
+                    </div>
+                    <div className="card-icon">
+                      <Icon size={20} strokeWidth={1.5} className="text-white/70" />
+                    </div>
+                    <div className="card-label">{g.label}</div>
+                    <div className="card-meta">{g.meta}</div>
+                  </GlowCard>
+                );
+              })}
+            </div>
           </div>
+
           <div className="reveal">
             <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">software</div>
-            <ul className="space-y-3 text-2xl text-white/85 sm:text-3xl"
-                style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}>
-              {gear.software.map((g) => <li key={g} className="border-b border-white/10 pb-3">{g}</li>)}
-            </ul>
+            <div className="card-grid grid-cols-1 sm:grid-cols-2">
+              {software.map((g) => {
+                const Icon = g.icon;
+                return (
+                  <GlowCard key={g.label}>
+                    <div className="mb-4 overflow-hidden rounded-lg border border-white/10">
+                      <img
+                        src={g.img}
+                        alt={g.label}
+                        loading="lazy"
+                        className="h-28 w-full object-cover transition-transform duration-700 ease-out hover:scale-110"
+                      />
+                    </div>
+                    <div className="card-icon">
+                      <Icon size={20} strokeWidth={1.5} className="text-white/70" />
+                    </div>
+                    <div className="card-label">{g.label}</div>
+                    <div className="card-meta">{g.meta}</div>
+                  </GlowCard>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

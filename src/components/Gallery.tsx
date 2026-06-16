@@ -66,20 +66,32 @@ export function Gallery() {
           fragments of taste.
         </h2>
 
-        <div className="mt-20 columns-1 gap-6 sm:columns-2 lg:columns-3">
-          {images.map((img, i) => (
-            <div
-              key={i}
-              className={`reveal mb-6 break-inside-avoid overflow-hidden rounded-xl border border-white/10 ${hMap[img.h as keyof typeof hMap]}`}
-            >
-              <img
-                src={img.src}
-                alt=""
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out hover:scale-105"
-              />
-            </div>
-          ))}
+        <div className="mt-20 grid grid-cols-6 auto-rows-[90px] gap-3 sm:gap-4">
+          {[
+            { i: 0, cls: "col-span-4 row-span-5", rot: "-1deg", ty: "0px" },
+            { i: 1, cls: "col-span-2 row-span-3 mt-8", rot: "1.5deg", ty: "20px" },
+            { i: 2, cls: "col-span-2 row-span-4", rot: "-0.5deg", ty: "-10px" },
+            { i: 3, cls: "col-span-3 row-span-3", rot: "0.8deg", ty: "30px" },
+            { i: 4, cls: "col-span-3 row-span-4 -mt-6", rot: "-1.2deg", ty: "-15px" },
+            { i: 5, cls: "col-span-3 row-span-3", rot: "0.6deg", ty: "10px" },
+          ].map((spec) => {
+            const img = images[spec.i];
+            return (
+              <div
+                key={spec.i}
+                className={`reveal group relative overflow-hidden rounded-xl border border-white/10 ${spec.cls}`}
+                style={{ transform: `rotate(${spec.rot}) translateY(${spec.ty})` }}
+              >
+                <img
+                  src={img.src}
+                  alt=""
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-32 grid grid-cols-1 gap-16 md:grid-cols-2">

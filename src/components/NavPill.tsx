@@ -56,18 +56,16 @@ export function NavPill() {
         translate: show ? "0 0" : "0 30px",
       }}
     >
-      <nav className="glass flex items-center gap-1 rounded-full px-2 py-2 shadow-[0_8px_40px_rgba(0,0,0,0.6)] sm:px-3">
+      <nav className="glass flex items-center gap-0.5 rounded-full px-1.5 py-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
         {items.map((it) => (
           <button
             key={it.id}
             onClick={() => go(it.id)}
-            className="group flex items-center gap-2 rounded-full px-3 py-2 text-xs text-white/80 transition-all duration-300 hover:bg-white/10 hover:text-white sm:px-4"
+            className="group grid h-9 w-9 place-items-center rounded-full text-white/70 transition-all duration-300 hover:bg-white/10 hover:text-white"
             aria-label={it.label}
+            title={it.label}
           >
-            <i className={`bi ${it.icon} text-sm`} />
-            <span className="hidden sm:inline" style={{ fontWeight: 200 }}>
-              {it.label}
-            </span>
+            <i className={`bi ${it.icon} text-[13px]`} />
           </button>
         ))}
       </nav>

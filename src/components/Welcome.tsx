@@ -89,11 +89,12 @@ export function Welcome() {
 
           <div className="reveal md:col-span-4 md:col-start-9">
             <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">hobbies</div>
-            <div className="card-grid grid-cols-1 sm:grid-cols-2">
-              {hobbies.map((h) => {
+            <div className="grid grid-cols-2 gap-3">
+              {hobbies.map((h, i) => {
                 const Icon = h.icon;
+                const offset = i % 2 === 0 ? "translate-y-3" : "-translate-y-2";
                 return (
-                  <GlowCard key={h.label}>
+                  <GlowCard key={h.label} className={offset}>
                     <div className="card-icon">
                       <Icon size={20} strokeWidth={1.5} className="text-white/70" />
                     </div>

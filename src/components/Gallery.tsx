@@ -94,58 +94,38 @@ export function Gallery() {
           })}
         </div>
 
-        <div className="mt-32 grid grid-cols-1 gap-16 md:grid-cols-2">
-          <div className="reveal">
-            <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">hardware</div>
-            <div className="card-grid grid-cols-1 sm:grid-cols-2">
-              {hardware.map((g) => {
-                const Icon = g.icon;
-                return (
-                  <GlowCard key={g.label}>
-                    <div className="mb-4 overflow-hidden rounded-lg border border-white/10">
-                      <img
-                        src={g.img}
-                        alt={g.label}
-                        loading="lazy"
-                        className="h-28 w-full object-cover transition-transform duration-700 ease-out hover:scale-110"
-                      />
-                    </div>
-                    <div className="card-icon">
-                      <Icon size={20} strokeWidth={1.5} className="text-white/70" />
-                    </div>
-                    <div className="card-label">{g.label}</div>
-                    <div className="card-meta">{g.meta}</div>
-                  </GlowCard>
-                );
-              })}
+        <div className="mt-32 space-y-24">
+          {[
+            { title: "hardware", items: hardware, spans: ["sm:col-span-3", "sm:col-span-2", "sm:col-span-2", "sm:col-span-3", "sm:col-span-5"] },
+            { title: "software", items: software, spans: ["sm:col-span-2", "sm:col-span-3", "sm:col-span-3", "sm:col-span-2", "sm:col-span-5"] },
+          ].map((group) => (
+            <div key={group.title} className="reveal">
+              <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">{group.title}</div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
+                {group.items.map((g, idx) => {
+                  const Icon = g.icon;
+                  const offset = idx % 2 === 0 ? "sm:translate-y-4" : "sm:-translate-y-2";
+                  return (
+                    <GlowCard key={g.label} className={`${group.spans[idx] ?? "sm:col-span-2"} ${offset}`}>
+                      <div className="mb-4 overflow-hidden rounded-lg border border-white/10">
+                        <img
+                          src={g.img}
+                          alt={g.label}
+                          loading="lazy"
+                          className="h-28 w-full object-cover transition-transform duration-700 ease-out hover:scale-110"
+                        />
+                      </div>
+                      <div className="card-icon">
+                        <Icon size={20} strokeWidth={1.5} className="text-white/70" />
+                      </div>
+                      <div className="card-label">{g.label}</div>
+                      <div className="card-meta">{g.meta}</div>
+                    </GlowCard>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-
-          <div className="reveal">
-            <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">software</div>
-            <div className="card-grid grid-cols-1 sm:grid-cols-2">
-              {software.map((g) => {
-                const Icon = g.icon;
-                return (
-                  <GlowCard key={g.label}>
-                    <div className="mb-4 overflow-hidden rounded-lg border border-white/10">
-                      <img
-                        src={g.img}
-                        alt={g.label}
-                        loading="lazy"
-                        className="h-28 w-full object-cover transition-transform duration-700 ease-out hover:scale-110"
-                      />
-                    </div>
-                    <div className="card-icon">
-                      <Icon size={20} strokeWidth={1.5} className="text-white/70" />
-                    </div>
-                    <div className="card-label">{g.label}</div>
-                    <div className="card-meta">{g.meta}</div>
-                  </GlowCard>
-                );
-              })}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

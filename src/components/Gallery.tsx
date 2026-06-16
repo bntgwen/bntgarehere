@@ -10,7 +10,7 @@ const images = [
   { src: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80", h: "medium" },
 ];
 
-const hMap = { tall: "h-[480px]", medium: "h-[340px]", short: "h-[240px]" } as const;
+
 
 interface GearItem {
   label: string;

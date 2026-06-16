@@ -53,7 +53,7 @@ export function Contact() {
   const onSubmit = async (data: ContactFormData) => {
     setSending(true);
     try {
-      const res = await fetch("https://formsubmit.co/ajax/wtterson011@gmail.com", {
+      const res = await fetch("https://formsubmit.co/ajax/bntgjoe00@gmail.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({

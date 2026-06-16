@@ -56,70 +56,28 @@ export function Hero() {
       id="home"
       className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden bg-black"
     >
-      {/* Gloss orbs */}
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          ref={setOrb(0)}
-          className="gloss-orb"
-          style={{
-            width: "55vmin",
-            height: "55vmin",
-            left: "20%",
-            top: "25%",
-            background: "radial-gradient(circle, rgba(120,180,255,0.85), rgba(80,120,255,0.2) 55%, transparent 70%)",
-            transform: "translate(var(--mx,0), var(--my,0))",
-            animation: "glossDrift 14s ease-in-out infinite",
-          }}
-        />
-        <div
-          ref={setOrb(1)}
-          className="gloss-orb"
-          style={{
-            width: "45vmin",
-            height: "45vmin",
-            right: "15%",
-            top: "30%",
-            background: "radial-gradient(circle, rgba(255,150,220,0.7), rgba(190,90,255,0.15) 55%, transparent 70%)",
-            transform: "translate(var(--mx,0), var(--my,0))",
-            animation: "glossDrift2 18s ease-in-out infinite",
-          }}
-        />
-        <div
-          ref={setOrb(2)}
-          className="gloss-orb"
-          style={{
-            width: "60vmin",
-            height: "60vmin",
-            left: "35%",
-            bottom: "10%",
-            background: "radial-gradient(circle, rgba(140,255,220,0.55), rgba(60,200,255,0.15) 55%, transparent 70%)",
-            transform: "translate(var(--mx,0), var(--my,0))",
-            animation: "glossDrift3 22s ease-in-out infinite",
-          }}
-        />
-        <div
-          ref={setOrb(3)}
-          className="gloss-orb"
-          style={{
-            width: "35vmin",
-            height: "35vmin",
-            left: "50%",
-            top: "50%",
-            transform: "translate(calc(-50% + var(--mx,0)), calc(-50% + var(--my,0)))",
-            background: "radial-gradient(circle, rgba(255,255,255,0.85), rgba(255,255,255,0.1) 55%, transparent 70%)",
-            animation: "glossDrift 12s ease-in-out infinite",
-          }}
-        />
-      </div>
-
-      {/* Subtle grain overlay */}
+      {/* Thin grid background */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-overlay"
+        className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+            "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+          maskImage: "radial-gradient(ellipse at center, black 40%, transparent 85%)",
+          WebkitMaskImage: "radial-gradient(ellipse at center, black 40%, transparent 85%)",
         }}
       />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)",
+          backgroundSize: "16px 16px",
+          maskImage: "radial-gradient(ellipse at center, black 20%, transparent 70%)",
+          WebkitMaskImage: "radial-gradient(ellipse at center, black 20%, transparent 70%)",
+        }}
+      />
+
 
       {/* Title */}
       <div className="relative z-10 px-6 text-center" data-hero-title>

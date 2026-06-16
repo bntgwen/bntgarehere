@@ -89,11 +89,12 @@ export function Welcome() {
 
           <div className="reveal md:col-span-4 md:col-start-9">
             <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">hobbies</div>
-            <div className="card-grid grid-cols-1 sm:grid-cols-2">
-              {hobbies.map((h) => {
+            <div className="grid grid-cols-2 gap-3">
+              {hobbies.map((h, i) => {
                 const Icon = h.icon;
+                const offset = i % 2 === 0 ? "translate-y-3" : "-translate-y-2";
                 return (
-                  <GlowCard key={h.label}>
+                  <GlowCard key={h.label} className={offset}>
                     <div className="card-icon">
                       <Icon size={20} strokeWidth={1.5} className="text-white/70" />
                     </div>
@@ -108,11 +109,13 @@ export function Welcome() {
 
         <div className="reveal mt-32">
           <div className="mb-8 text-[10px] tracking-[0.4em] text-white/40">stack</div>
-          <div className="card-grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-            {tech.map((t) => {
+          <div className="grid grid-cols-6 gap-3 sm:grid-cols-12">
+            {tech.map((t, i) => {
               const Icon = t.icon;
+              const spans = ["col-span-3 sm:col-span-4", "col-span-3 sm:col-span-3", "col-span-3 sm:col-span-5", "col-span-3 sm:col-span-3", "col-span-3 sm:col-span-4", "col-span-3 sm:col-span-5", "col-span-3 sm:col-span-3", "col-span-3 sm:col-span-4", "col-span-3 sm:col-span-5", "col-span-3 sm:col-span-3", "col-span-3 sm:col-span-4", "col-span-3 sm:col-span-5"];
+              const offset = i % 3 === 0 ? "sm:translate-y-4" : i % 3 === 1 ? "" : "sm:-translate-y-3";
               return (
-                <GlowCard key={t.label}>
+                <GlowCard key={t.label} className={`${spans[i] ?? "col-span-3"} ${offset}`}>
                   <div className="card-icon">
                     <Icon size={20} strokeWidth={1.5} className="text-white/70" />
                   </div>

@@ -10,7 +10,7 @@ const images = [
   { src: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80", h: "medium" },
 ];
 
-const hMap = { tall: "h-[480px]", medium: "h-[340px]", short: "h-[240px]" } as const;
+
 
 interface GearItem {
   label: string;
@@ -66,74 +66,66 @@ export function Gallery() {
           fragments of taste.
         </h2>
 
-        <div className="mt-20 columns-1 gap-6 sm:columns-2 lg:columns-3">
-          {images.map((img, i) => (
-            <div
-              key={i}
-              className={`reveal mb-6 break-inside-avoid overflow-hidden rounded-xl border border-white/10 ${hMap[img.h as keyof typeof hMap]}`}
-            >
-              <img
-                src={img.src}
-                alt=""
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out hover:scale-105"
-              />
-            </div>
-          ))}
+        <div className="mt-20 grid grid-cols-6 auto-rows-[90px] gap-3 sm:gap-4">
+          {[
+            { i: 0, cls: "col-span-4 row-span-5", rot: "-1deg", ty: "0px" },
+            { i: 1, cls: "col-span-2 row-span-3 mt-8", rot: "1.5deg", ty: "20px" },
+            { i: 2, cls: "col-span-2 row-span-4", rot: "-0.5deg", ty: "-10px" },
+            { i: 3, cls: "col-span-3 row-span-3", rot: "0.8deg", ty: "30px" },
+            { i: 4, cls: "col-span-3 row-span-4 -mt-6", rot: "-1.2deg", ty: "-15px" },
+            { i: 5, cls: "col-span-3 row-span-3", rot: "0.6deg", ty: "10px" },
+          ].map((spec) => {
+            const img = images[spec.i];
+            return (
+              <div
+                key={spec.i}
+                className={`reveal group relative overflow-hidden rounded-xl border border-white/10 ${spec.cls}`}
+                style={{ transform: `rotate(${spec.rot}) translateY(${spec.ty})` }}
+              >
+                <img
+                  src={img.src}
+                  alt=""
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+              </div>
+            );
+          })}
         </div>
 
-        <div className="mt-32 grid grid-cols-1 gap-16 md:grid-cols-2">
-          <div className="reveal">
-            <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">hardware</div>
-            <div className="card-grid grid-cols-1 sm:grid-cols-2">
-              {hardware.map((g) => {
-                const Icon = g.icon;
-                return (
-                  <GlowCard key={g.label}>
-                    <div className="mb-4 overflow-hidden rounded-lg border border-white/10">
-                      <img
-                        src={g.img}
-                        alt={g.label}
-                        loading="lazy"
-                        className="h-28 w-full object-cover transition-transform duration-700 ease-out hover:scale-110"
-                      />
-                    </div>
-                    <div className="card-icon">
-                      <Icon size={20} strokeWidth={1.5} className="text-white/70" />
-                    </div>
-                    <div className="card-label">{g.label}</div>
-                    <div className="card-meta">{g.meta}</div>
-                  </GlowCard>
-                );
-              })}
+        <div className="mt-32 space-y-24">
+          {[
+            { title: "hardware", items: hardware, spans: ["sm:col-span-3", "sm:col-span-2", "sm:col-span-2", "sm:col-span-3", "sm:col-span-5"] },
+            { title: "software", items: software, spans: ["sm:col-span-2", "sm:col-span-3", "sm:col-span-3", "sm:col-span-2", "sm:col-span-5"] },
+          ].map((group) => (
+            <div key={group.title} className="reveal">
+              <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">{group.title}</div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
+                {group.items.map((g, idx) => {
+                  const Icon = g.icon;
+                  const offset = idx % 2 === 0 ? "sm:translate-y-4" : "sm:-translate-y-2";
+                  return (
+                    <GlowCard key={g.label} className={`${group.spans[idx] ?? "sm:col-span-2"} ${offset}`}>
+                      <div className="mb-4 overflow-hidden rounded-lg border border-white/10">
+                        <img
+                          src={g.img}
+                          alt={g.label}
+                          loading="lazy"
+                          className="h-28 w-full object-cover transition-transform duration-700 ease-out hover:scale-110"
+                        />
+                      </div>
+                      <div className="card-icon">
+                        <Icon size={20} strokeWidth={1.5} className="text-white/70" />
+                      </div>
+                      <div className="card-label">{g.label}</div>
+                      <div className="card-meta">{g.meta}</div>
+                    </GlowCard>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-
-          <div className="reveal">
-            <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">software</div>
-            <div className="card-grid grid-cols-1 sm:grid-cols-2">
-              {software.map((g) => {
-                const Icon = g.icon;
-                return (
-                  <GlowCard key={g.label}>
-                    <div className="mb-4 overflow-hidden rounded-lg border border-white/10">
-                      <img
-                        src={g.img}
-                        alt={g.label}
-                        loading="lazy"
-                        className="h-28 w-full object-cover transition-transform duration-700 ease-out hover:scale-110"
-                      />
-                    </div>
-                    <div className="card-icon">
-                      <Icon size={20} strokeWidth={1.5} className="text-white/70" />
-                    </div>
-                    <div className="card-label">{g.label}</div>
-                    <div className="card-meta">{g.meta}</div>
-                  </GlowCard>
-                );
-              })}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

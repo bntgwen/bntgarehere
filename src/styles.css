@@ -167,18 +167,15 @@ html.lenis, html.lenis body { height: auto; }
 .card-item {
   position: relative;
   border-radius: 1rem;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.65) 50%, rgba(255,255,255,0.5) 100%);
-  border: 1px solid rgba(255,255,255,0.6);
-  backdrop-filter: blur(20px) saturate(160%);
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
   padding: 1.75rem;
   overflow: hidden;
   cursor: default;
   color: #0a0a0a;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.9),
-    inset 0 -1px 0 rgba(255,255,255,0.3),
-    0 10px 40px -10px rgba(0,0,0,0.4);
+    0 10px 40px -10px rgba(0,0,0,0.25);
   transition: transform 0.5s cubic-bezier(0.16,1,0.3,1),
               box-shadow 0.5s cubic-bezier(0.16,1,0.3,1),
               border-color 0.5s ease;
@@ -191,9 +188,9 @@ html.lenis, html.lenis body { height: auto; }
   top: 0; left: 0; right: 0;
   height: 50%;
   border-radius: 1rem 1rem 50% 50% / 1rem 1rem 100% 100%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0) 100%);
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .card-item::before {
@@ -202,7 +199,7 @@ html.lenis, html.lenis body { height: auto; }
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: conic-gradient(from var(--angle, 0deg), rgba(255,255,255,0.9), rgba(255,255,255,0.2), rgba(255,255,255,0.9));
+  background: conic-gradient(from var(--angle, 0deg), rgba(0,0,0,0.12), rgba(0,0,0,0.04), rgba(0,0,0,0.12));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -216,12 +213,12 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 .card-item:hover {
-  transform: translateY(-6px) scale(1.01);
+  transform: translateY(-6px) scale(1.02);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.95),
-    inset 0 -1px 0 rgba(255,255,255,0.4),
-    0 30px 80px -20px rgba(0,0,0,0.55);
-  border-color: rgba(255,255,255,0.85);
+    0 30px 80px -20px rgba(0,0,0,0.45),
+    0 0 60px rgba(255,255,255,0.25);
+  border-color: rgba(0,0,0,0.12);
 }
 
 .card-item .card-glow {
@@ -229,10 +226,9 @@ html.lenis, html.lenis body { height: auto; }
   inset: 0;
   border-radius: inherit;
   opacity: 0;
-  background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.6), transparent 60%);
+  background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(0,0,0,0.07), transparent 60%);
   transition: opacity 0.4s ease;
   pointer-events: none;
-  mix-blend-mode: overlay;
 }
 
 .card-item:hover .card-glow {
@@ -251,24 +247,25 @@ html.lenis, html.lenis body { height: auto; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.4));
-  border: 1px solid rgba(255,255,255,0.7);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 4px 12px rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 4px 12px rgba(0,0,0,0.06);
   margin-bottom: 1rem;
   transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), background 0.4s ease;
 }
 
 .card-item:hover .card-icon {
   transform: scale(1.1) rotate(-3deg);
+  background: rgba(0,0,0,0.08);
 }
 
-.card-item .card-icon svg { color: rgba(20,20,20,0.85) !important; }
+.card-item .card-icon svg { color: rgba(0,0,0,0.9) !important; }
 
 .card-item .card-label {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
   font-size: 1.05rem;
-  color: rgba(15,15,15,0.95);
+  color: #000;
   letter-spacing: -0.01em;
 }
 
@@ -276,7 +273,7 @@ html.lenis, html.lenis body { height: auto; }
   font-family: "Raleway", sans-serif;
   font-weight: 400;
   font-size: 0.75rem;
-  color: rgba(40,40,40,0.55);
+  color: rgba(0,0,0,0.75);
   margin-top: 0.35rem;
   letter-spacing: 0.08em;
   text-transform: lowercase;

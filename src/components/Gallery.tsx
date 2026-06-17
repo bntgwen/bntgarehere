@@ -2,12 +2,16 @@ import { useRef, useCallback } from "react";
 import { Monitor, Laptop, Camera, AudioLines, Pen, type LucideIcon } from "lucide-react";
 
 const images = [
-  { src: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&q=80", h: "tall" },
-  { src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80", h: "short" },
-  { src: "https://images.unsplash.com/photo-1496180470114-6ef490f3ff22?w=1200&q=80", h: "medium" },
-  { src: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=1200&q=80", h: "tall" },
-  { src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&q=80", h: "short" },
-  { src: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80", h: "medium" },
+  { src: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&q=80" },
+  { src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80" },
+  { src: "https://images.unsplash.com/photo-1496180470114-6ef490f3ff22?w=900&q=80" },
+  { src: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=1100&q=80" },
+  { src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&q=80" },
+  { src: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=900&q=80" },
+  { src: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80" },
+  { src: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1000&q=80" },
+  { src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=900&q=80" },
+  { src: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1000&q=80" },
 ];
 
 

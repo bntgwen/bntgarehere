@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Preloader } from "@/components/Preloader";
 import { Hero } from "@/components/Hero";
 import { NavPill } from "@/components/NavPill";
-import { WaveLine } from "@/components/WaveLine";
+import { GridBackground } from "@/components/GridBackground";
 import { Welcome } from "@/components/Welcome";
 import { Projects } from "@/components/Projects";
 import { Certificates } from "@/components/Certificates";
@@ -32,7 +32,7 @@ function Index() {
   return (
     <main className="relative bg-black text-white">
       {!ready && <Preloader onDone={() => setReady(true)} />}
-      <WaveLine />
+      <GridBackground />
       <Hero />
       <Welcome />
       <Projects />

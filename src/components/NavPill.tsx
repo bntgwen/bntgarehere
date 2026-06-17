@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
 const items = [
-  { id: "home", label: "home", icon: "bi-house" },
-  { id: "welcome", label: "about", icon: "bi-person" },
-  { id: "projects", label: "projects", icon: "bi-tools" },
-  { id: "certificates", label: "certs", icon: "bi-award" },
+  { id: "welcome", label: "welcome", icon: "bi-person" },
+  { id: "certificates", label: "certificates", icon: "bi-award" },
   { id: "gallery", label: "gallery", icon: "bi-images" },
   { id: "contact", label: "contact", icon: "bi-envelope" },
 ];

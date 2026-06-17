@@ -54,31 +54,8 @@ export function Hero() {
     <section
       ref={wrapRef}
       id="home"
-      className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden bg-black"
+      className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden"
     >
-      {/* Thin grid background */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-          maskImage: "radial-gradient(ellipse at center, black 40%, transparent 85%)",
-          WebkitMaskImage: "radial-gradient(ellipse at center, black 40%, transparent 85%)",
-        }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)",
-          backgroundSize: "16px 16px",
-          maskImage: "radial-gradient(ellipse at center, black 20%, transparent 70%)",
-          WebkitMaskImage: "radial-gradient(ellipse at center, black 20%, transparent 70%)",
-        }}
-      />
-
-
       {/* Title */}
       <div className="relative z-10 px-6 text-center" data-hero-title>
         <p

@@ -33,12 +33,14 @@ function Index() {
     <main className="relative bg-black text-white">
       {!ready && <Preloader onDone={() => setReady(true)} />}
       <GridBackground />
-      <Hero />
-      <Welcome />
-      <Projects />
-      <Certificates />
-      <Gallery />
-      <Contact />
+      <div className="relative z-10">
+        <Hero />
+        <Welcome />
+        <Projects />
+        <Certificates />
+        <Gallery />
+        <Contact />
+      </div>
       <NavPill />
     </main>
   );

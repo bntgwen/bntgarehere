@@ -259,13 +259,13 @@ html.lenis, html.lenis body { height: auto; }
   background: rgba(0,0,0,0.08);
 }
 
-.card-item .card-icon svg { color: rgba(0,0,0,0.85) !important; }
+.card-item .card-icon svg { color: rgba(0,0,0,0.9) !important; }
 
 .card-item .card-label {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
   font-size: 1.05rem;
-  color: rgba(0,0,0,0.95);
+  color: #000;
   letter-spacing: -0.01em;
 }
 
@@ -273,7 +273,7 @@ html.lenis, html.lenis body { height: auto; }
   font-family: "Raleway", sans-serif;
   font-weight: 400;
   font-size: 0.75rem;
-  color: rgba(0,0,0,0.65);
+  color: rgba(0,0,0,0.75);
   margin-top: 0.35rem;
   letter-spacing: 0.08em;
   text-transform: lowercase;

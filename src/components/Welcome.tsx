@@ -5,15 +5,11 @@ import {
   Terminal, Database, Paintbrush, Box, Cuboid, Activity,
   type LucideIcon,
 } from "lucide-react";
-import { SplitText } from "./SplitText";
+import { WordReveal } from "./WordReveal";
 
-interface HobbyItem {
-  label: string;
-  meta: string;
-  icon: LucideIcon;
-}
+interface Item { label: string; meta: string; icon: LucideIcon; }
 
-const hobbies: HobbyItem[] = [
+const hobbies: Item[] = [
   { label: "shooting film", meta: "photography", icon: Camera },
   { label: "late-night code", meta: "development", icon: Moon },
   { label: "lo-fi playlists", meta: "music", icon: Headphones },
@@ -22,13 +18,7 @@ const hobbies: HobbyItem[] = [
   { label: "tinkering with synths", meta: "sound", icon: Sliders },
 ];
 
-interface TechItem {
-  label: string;
-  meta: string;
-  icon: LucideIcon;
-}
-
-const tech: TechItem[] = [
+const tech: Item[] = [
   { label: "typescript", meta: "language", icon: FileCode2 },
   { label: "react", meta: "framework", icon: Atom },
   { label: "next.js", meta: "framework", icon: Globe },
@@ -45,17 +35,13 @@ const tech: TechItem[] = [
 
 function GlowCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
-
   const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    el.style.setProperty("--mx", `${x}%`);
-    el.style.setProperty("--my", `${y}%`);
+    el.style.setProperty("--mx", `${((e.clientX - rect.left) / rect.width) * 100}%`);
+    el.style.setProperty("--my", `${((e.clientY - rect.top) / rect.height) * 100}%`);
   }, []);
-
   return (
     <div ref={ref} onMouseMove={onMove} className={`card-item ${className}`}>
       <div className="card-glow" />
@@ -70,7 +56,7 @@ export function Welcome() {
       <div className="mx-auto max-w-7xl">
         <div className="reveal mb-4 text-xs tracking-[0.5em] text-white/40">01 — welcome</div>
 
-        <SplitText
+        <WordReveal
           as="h2"
           text="a designer who codes, a developer who draws."
           className="block max-w-4xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white"
@@ -80,23 +66,24 @@ export function Welcome() {
         <div className="mt-24 grid grid-cols-1 gap-16 md:grid-cols-12">
           <div className="reveal md:col-span-5 md:col-start-2">
             <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">about</div>
-            <p className="text-lg leading-relaxed text-white/80 sm:text-xl" style={{ fontWeight: 200 }}>
-              i build quiet, considered interfaces. by day, i ship products with care.
-              by night, i sketch, write, and chase the kind of details no one notices —
-              but everyone feels.
-            </p>
+            <WordReveal
+              as="p"
+              text="i build quiet, considered interfaces. by day, i ship products with care. by night, i sketch, write, and chase the kind of details no one notices — but everyone feels."
+              className="text-lg leading-relaxed text-white/80 sm:text-xl"
+              style={{ fontWeight: 200 }}
+              stagger={28}
+            />
           </div>
 
-          <div className="reveal md:col-span-4 md:col-start-9">
+          <div className="reveal md:col-span-5 md:col-start-8">
             <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">hobbies</div>
-            <div className="grid grid-cols-2 gap-3">
-              {hobbies.map((h, i) => {
+            <div className="grid grid-cols-1 gap-px border border-white/10 bg-white/10 sm:grid-cols-2">
+              {hobbies.map((h) => {
                 const Icon = h.icon;
-                const offset = i % 2 === 0 ? "translate-y-3" : "-translate-y-2";
                 return (
-                  <GlowCard key={h.label} className={offset}>
+                  <GlowCard key={h.label} className="border-0">
                     <div className="card-icon">
-                      <Icon size={20} strokeWidth={1.5} className="text-white/70" />
+                      <Icon size={20} strokeWidth={1.5} />
                     </div>
                     <div className="card-label">{h.label}</div>
                     <div className="card-meta">{h.meta}</div>
@@ -109,15 +96,13 @@ export function Welcome() {
 
         <div className="reveal mt-32">
           <div className="mb-8 text-[10px] tracking-[0.4em] text-white/40">stack</div>
-          <div className="grid grid-cols-6 gap-3 sm:grid-cols-12">
-            {tech.map((t, i) => {
+          <div className="grid grid-cols-1 gap-px border border-white/10 bg-white/10 sm:grid-cols-3 lg:grid-cols-4">
+            {tech.map((t) => {
               const Icon = t.icon;
-              const spans = ["col-span-3 sm:col-span-4", "col-span-3 sm:col-span-3", "col-span-3 sm:col-span-5", "col-span-3 sm:col-span-3", "col-span-3 sm:col-span-4", "col-span-3 sm:col-span-5", "col-span-3 sm:col-span-3", "col-span-3 sm:col-span-4", "col-span-3 sm:col-span-5", "col-span-3 sm:col-span-3", "col-span-3 sm:col-span-4", "col-span-3 sm:col-span-5"];
-              const offset = i % 3 === 0 ? "sm:translate-y-4" : i % 3 === 1 ? "" : "sm:-translate-y-3";
               return (
-                <GlowCard key={t.label} className={`${spans[i] ?? "col-span-3"} ${offset}`}>
+                <GlowCard key={t.label} className="border-0">
                   <div className="card-icon">
-                    <Icon size={20} strokeWidth={1.5} className="text-white/70" />
+                    <Icon size={20} strokeWidth={1.5} />
                   </div>
                   <div className="card-label">{t.label}</div>
                   <div className="card-meta">{t.meta}</div>

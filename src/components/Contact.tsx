@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
+import { WordReveal } from "./WordReveal";
 
 const contactSchema = z.object({
   name: z
@@ -84,12 +85,12 @@ export function Contact() {
     <section id="contact" className="relative px-6 py-32 sm:px-12 sm:py-48">
       <div className="mx-auto max-w-7xl">
         <div className="reveal mb-4 text-xs tracking-[0.5em] text-white/40">05 — contact</div>
-        <h2
-          className="reveal max-w-4xl text-[clamp(2rem,7vw,6rem)] leading-[1.02] text-white"
+        <WordReveal
+          as="h2"
+          text="let's build something quiet, together."
+          className="block max-w-4xl text-[clamp(2rem,7vw,6rem)] leading-[1.02] text-white"
           style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
-        >
-          let&apos;s build something quiet, together.
-        </h2>
+        />
 
         <div className="mt-20 flex flex-wrap items-center gap-6">
           <button

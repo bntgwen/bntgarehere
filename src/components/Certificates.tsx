@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { WordReveal } from "./WordReveal";
 
 interface Cert {
   id: string;
@@ -46,10 +47,12 @@ export function Certificates() {
     <section id="certificates" className="relative px-6 py-32 sm:px-12 sm:py-48">
       <div className="mx-auto max-w-7xl">
         <div className="reveal mb-4 text-xs tracking-[0.5em] text-white/40">03 — certificates</div>
-        <h2 className="reveal max-w-3xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white"
-            style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}>
-          proof, for the curious.
-        </h2>
+        <WordReveal
+          as="h2"
+          text="proof, for the curious."
+          className="block max-w-3xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white"
+          style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
+        />
 
         <ul className="mt-20 divide-y divide-white/10 border-y border-white/10">
           {certs.map((c, i) => (

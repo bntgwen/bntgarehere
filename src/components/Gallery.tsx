@@ -1,57 +1,52 @@
 import { useRef, useCallback } from "react";
 import { Monitor, Laptop, Camera, AudioLines, Pen, type LucideIcon } from "lucide-react";
+import { WordReveal } from "./WordReveal";
 
-const images = [
-  { src: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&q=80" },
-  { src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80" },
-  { src: "https://images.unsplash.com/photo-1496180470114-6ef490f3ff22?w=900&q=80" },
-  { src: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=1100&q=80" },
-  { src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&q=80" },
-  { src: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=900&q=80" },
-  { src: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80" },
-  { src: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1000&q=80" },
-  { src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=900&q=80" },
-  { src: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1000&q=80" },
+interface GalleryImg { src: string; ratio: string; }
+
+// pinterest-like: a mix of tall, wide, square, big, small
+const images: GalleryImg[] = [
+  { src: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&q=80", ratio: "3/4" },   // tall
+  { src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80", ratio: "4/3" },   // wide
+  { src: "https://images.unsplash.com/photo-1496180470114-6ef490f3ff22?w=1200&q=80", ratio: "1/1" },   // square small
+  { src: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=1200&q=80", ratio: "2/3" },   // tall
+  { src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=80", ratio: "16/9" },  // very wide
+  { src: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80", ratio: "1/1" },
+  { src: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80", ratio: "3/5" },   // very tall
+  { src: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1600&q=80", ratio: "5/4" },
+  { src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80", ratio: "4/5" },
+  { src: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1600&q=80", ratio: "16/10" },
+  { src: "https://images.unsplash.com/photo-1493514789931-586cb221d7a7?w=1200&q=80", ratio: "2/3" },
+  { src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=1200&q=80", ratio: "1/1" },
 ];
 
-
-
-interface GearItem {
-  label: string;
-  meta: string;
-  icon: LucideIcon;
-  img: string;
-}
+interface GearItem { label: string; meta: string; icon: LucideIcon; }
 
 const hardware: GearItem[] = [
-  { label: "macbook pro 16″ m3", meta: "primary machine", icon: Laptop, img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=600&q=80" },
-  { label: "apple studio display", meta: "5k retina", icon: Monitor, img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&q=80" },
-  { label: "leica q3", meta: "compact camera", icon: Camera, img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&q=80" },
-  { label: "moog matriarch", meta: "analog synth", icon: AudioLines, img: "https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=600&q=80" },
-  { label: "wacom intuos pro", meta: "pen tablet", icon: Pen, img: "https://images.unsplash.com/photo-1585792180666-f7347f49048d?w=600&q=80" },
+  { label: "macbook pro 16″ m3", meta: "primary machine", icon: Laptop },
+  { label: "apple studio display", meta: "5k retina", icon: Monitor },
+  { label: "leica q3", meta: "compact camera", icon: Camera },
+  { label: "moog matriarch", meta: "analog synth", icon: AudioLines },
+  { label: "wacom intuos pro", meta: "pen tablet", icon: Pen },
 ];
 
 const software: GearItem[] = [
-  { label: "figma", meta: "interface design", icon: Pen, img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80" },
-  { label: "vs code", meta: "code editor", icon: Laptop, img: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=600&q=80" },
-  { label: "blender", meta: "3d creation", icon: Monitor, img: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&q=80" },
-  { label: "ableton live", meta: "music production", icon: AudioLines, img: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=80" },
-  { label: "adobe lightroom", meta: "photo editing", icon: Camera, img: "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=600&q=80" },
+  { label: "figma", meta: "interface design", icon: Pen },
+  { label: "vs code", meta: "code editor", icon: Laptop },
+  { label: "blender", meta: "3d creation", icon: Monitor },
+  { label: "ableton live", meta: "music production", icon: AudioLines },
+  { label: "adobe lightroom", meta: "photo editing", icon: Camera },
 ];
 
 function GlowCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
-
   const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    el.style.setProperty("--mx", `${x}%`);
-    el.style.setProperty("--my", `${y}%`);
+    el.style.setProperty("--mx", `${((e.clientX - rect.left) / rect.width) * 100}%`);
+    el.style.setProperty("--my", `${((e.clientY - rect.top) / rect.height) * 100}%`);
   }, []);
-
   return (
     <div ref={ref} onMouseMove={onMove} className={`card-item ${className}`}>
       <div className="card-glow" />
@@ -65,55 +60,46 @@ export function Gallery() {
     <section id="gallery" className="relative px-6 py-32 sm:px-12 sm:py-48">
       <div className="mx-auto max-w-7xl">
         <div className="reveal mb-4 text-xs tracking-[0.5em] text-white/40">04 — gallery & gear</div>
-        <h2 className="reveal max-w-3xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white"
-            style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}>
-          fragments of taste.
-        </h2>
+        <WordReveal
+          as="h2"
+          text="fragments of taste."
+          className="block max-w-3xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white"
+          style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
+        />
 
         <div className="mt-20 columns-2 gap-4 sm:columns-3 lg:columns-4 [column-fill:_balance]">
-          {images.map((img, i) => {
-            const rot = i % 4 === 0 ? "-0.6deg" : i % 4 === 1 ? "0.5deg" : i % 4 === 2 ? "-0.3deg" : "0.7deg";
-            return (
-              <div
-                key={i}
-                className="reveal group relative mb-4 inline-block w-full overflow-hidden rounded-xl border border-white/10 break-inside-avoid"
-                style={{ transform: `rotate(${rot})` }}
-              >
+          {images.map((img, i) => (
+            <div
+              key={i}
+              className="reveal group relative mb-4 inline-block w-full overflow-hidden border border-white/10 break-inside-avoid"
+            >
+              <div style={{ aspectRatio: img.ratio }} className="w-full overflow-hidden">
                 <img
                   src={img.src}
                   alt=""
                   loading="lazy"
-                  className="block h-auto w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
+                  className="block h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-110"
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
               </div>
-            );
-          })}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+            </div>
+          ))}
         </div>
 
-        <div className="mt-32 space-y-24">
+        <div className="mt-32 space-y-20">
           {[
-            { title: "hardware", items: hardware, spans: ["sm:col-span-3", "sm:col-span-2", "sm:col-span-2", "sm:col-span-3", "sm:col-span-5"] },
-            { title: "software", items: software, spans: ["sm:col-span-2", "sm:col-span-3", "sm:col-span-3", "sm:col-span-2", "sm:col-span-5"] },
+            { title: "hardware", items: hardware },
+            { title: "software", items: software },
           ].map((group) => (
             <div key={group.title} className="reveal">
               <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">{group.title}</div>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
-                {group.items.map((g, idx) => {
+              <div className="grid grid-cols-1 gap-px border border-white/10 sm:grid-cols-2 lg:grid-cols-3 bg-white/10">
+                {group.items.map((g) => {
                   const Icon = g.icon;
-                  const offset = idx % 2 === 0 ? "sm:translate-y-4" : "sm:-translate-y-2";
                   return (
-                    <GlowCard key={g.label} className={`${group.spans[idx] ?? "sm:col-span-2"} ${offset}`}>
-                      <div className="mb-4 overflow-hidden rounded-lg border border-white/10">
-                        <img
-                          src={g.img}
-                          alt={g.label}
-                          loading="lazy"
-                          className="h-28 w-full object-cover transition-transform duration-700 ease-out hover:scale-110"
-                        />
-                      </div>
+                    <GlowCard key={g.label} className="border-0">
                       <div className="card-icon">
-                        <Icon size={20} strokeWidth={1.5} className="text-white/70" />
+                        <Icon size={20} strokeWidth={1.5} />
                       </div>
                       <div className="card-label">{g.label}</div>
                       <div className="card-meta">{g.meta}</div>

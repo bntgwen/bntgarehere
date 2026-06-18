@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { WordReveal } from "./WordReveal";
 
 interface Repo {
   id: number;
@@ -33,10 +34,12 @@ export function Projects() {
     <section id="projects" className="relative px-6 py-32 sm:px-12 sm:py-48">
       <div className="mx-auto max-w-7xl">
         <div className="reveal mb-4 text-xs tracking-[0.5em] text-white/40">02 — projects</div>
-        <h2 className="reveal max-w-3xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white"
-            style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}>
-          things i&apos;ve made, broken, and remade.
-        </h2>
+        <WordReveal
+          as="h2"
+          text="things i've made, broken, and remade."
+          className="block max-w-3xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white"
+          style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
+        />
 
         <div className="mt-20 grid grid-cols-1 gap-px overflow-hidden border border-white/10 md:grid-cols-2">
           {repos.map((r, i) => (

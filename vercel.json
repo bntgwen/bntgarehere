@@ -1,1 +1,15 @@
-{}
+{
+  "version": 2,
+  "frameworks": null,
+  "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1",
+      "check": true
+    },
+    {
+      "src": "/.*",
+      "dest": ".vercel/output/functions/__server.func/index.mjs"
+    }
+  ]
+}

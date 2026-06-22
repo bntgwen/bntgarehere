@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { WordReveal } from "./WordReveal";
+import { SplitText } from "./SplitText";
 
 interface Repo {
   id: number;
@@ -12,43 +12,77 @@ interface Repo {
 }
 
 const fallback: Repo[] = [
-  { id: 1, name: "lumen-ui", description: "a minimalist react component library tuned for dark interfaces.", html_url: "#", homepage: "#", stargazers_count: 124, language: "typescript" },
-  { id: 2, name: "driftscroll", description: "physics-based smooth scroll primitives for the modern web.", html_url: "#", homepage: "#", stargazers_count: 87, language: "typescript" },
-  { id: 3, name: "noir-press", description: "a quiet, typography-first publishing platform.", html_url: "#", homepage: null, stargazers_count: 56, language: "react" },
-  { id: 4, name: "glow-shader", description: "gpu-accelerated gloss & glow effects, shipped as a tiny module.", html_url: "#", homepage: "#", stargazers_count: 211, language: "glsl" },
+  { id: 1, name: "Heitgh Logistic", description: "a minimalist logistic tracking web-based application.", html_url: "https://github.com/bntgwen/heitgh-logistic", homepage: "https://github.com/bntgwen/heitgh-logistic", stargazers_count: 0, language: "Blade & PHP" },
+  { id: 2, name: "Lib App", description: "function-full library reporting desktop application.", html_url: "https://github.com/bntgwen/LoginForm", homepage: "https://github.com/bntgwen/LoginForm", stargazers_count: 0, language: "JAVA & MySQL" },
+  { id: 3, name: "Stockables", description: "simple web-based application for manage your inventory.", html_url: "https://github.com/bntgwen/StockableTwo", homepage: "https://github.com/bntgwen/StockableTwo" , stargazers_count: 0, language: "Blade & PHP" },
+  { id: 4, name: "Pebbly Finance App", description: "simple yet easy web-based app for manage your money.", html_url: "https://github.com/bntgwen/Pebbly", homepage: "https://pebbly-five.vercel.app/app", stargazers_count: 0, language: "glsl" },
 ];
 
 export function Projects() {
   const [repos, setRepos] = useState<Repo[]>(fallback);
 
   useEffect(() => {
-    fetch("https://api.github.com/users/bntangishere/repos?sort=updated&per_page=6")
+    fetch("https://api.github.com/users/bntgwen/repos?sort=updated&per_page=20")
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (Array.isArray(data) && data.length) setRepos(data.slice(0, 6));
+        if (Array.isArray(data) && data.length) {
+          const namaRepoPilihan = ["heitgh-logistic", "loginform", "stockabletwo", "pebbly"];
+          const filtered = data.filter(repo => 
+            namaRepoPilihan.includes(repo.name.toLowerCase())
+          );
+          if (filtered.length) {
+            setRepos(filtered.slice(0, 4));
+          }
+        }
       })
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const elements = document.querySelectorAll(".reveal-grid-cards");
+
+    elements.forEach((el) => {
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            el.classList.add("in");
+          } else {
+            el.classList.remove("in");
+          }
+        },
+        { threshold: 0.1 }
+      );
+      io.observe(el);
+      observers.push(io);
+    });
+
+    return () => observers.forEach((io) => io.disconnect());
+  }, [repos]);
 
   return (
     <section id="projects" className="relative px-6 py-32 sm:px-12 sm:py-48">
       <div className="mx-auto max-w-7xl">
         <div className="reveal mb-4 text-xs tracking-[0.5em] text-white/40">02 — projects</div>
-        <WordReveal
-          as="h2"
-          text="things i've made, broken, and remade."
-          className="block max-w-3xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white"
-          style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
-        />
+        
+        <div className="max-w-3xl">
+          <SplitText
+            as="h2"
+            text="things i've made, or am making."
+            className="text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white tracking-tighter"
+            style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
+            staggerSpeed={20}
+          />
+        </div>
 
-        <div className="mt-20 grid grid-cols-1 gap-px overflow-hidden border border-white/10 md:grid-cols-2">
+        <div className="reveal-grid-cards mt-20 grid grid-cols-1 gap-px overflow-hidden border border-white/10 md:grid-cols-2 bg-white/10">
           {repos.map((r, i) => (
             <a
               key={r.id}
-              href={r.html_url}
+              href={r.homepage ?? r.html_url}
               target="_blank"
               rel="noreferrer"
-              className="reveal group relative block bg-black p-8 transition-colors duration-500 hover:bg-white/[0.03] sm:p-12"
+              className="card-item group relative block bg-black p-8 transition-colors duration-500 hover:bg-white/[0.03] sm:p-12"
               style={{ minHeight: 260 }}
             >
               <div className="flex items-start justify-between text-xs text-white/40">
@@ -73,7 +107,6 @@ export function Projects() {
                 )}
               </div>
 
-              {/* hover gloss */}
               <div
                 className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
                 style={{

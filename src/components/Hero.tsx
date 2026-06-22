@@ -56,13 +56,13 @@ export function Hero() {
       id="home"
       className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden"
     >
-      {/* Title */}
+
       <div className="relative z-10 px-6 text-center" data-hero-title>
         <p
           className="mb-6 text-xs tracking-[0.5em] text-white/50"
           style={{ fontWeight: 200 }}
         >
-          bntangishere
+         welcome
         </p>
         <h1
           className="text-[clamp(2.4rem,9vw,8rem)] leading-[1.02] text-white"
@@ -71,11 +71,10 @@ export function Hero() {
           nice to meet you
         </h1>
         <p className="mx-auto mt-8 max-w-md text-sm text-white/60 sm:text-base" style={{ fontWeight: 200 }}>
-          a quiet corner of the internet for design, code, and curiosity.
+          hello there whoever you are, introduce my name is bintang
         </p>
       </div>
 
-      {/* Scroll hint */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] tracking-[0.4em] text-white/40">
         scroll
       </div>

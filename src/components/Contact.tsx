@@ -1,9 +1,9 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
-import { WordReveal } from "./WordReveal";
+import { SplitText } from "./SplitText";
 
 const contactSchema = z.object({
   name: z
@@ -30,6 +30,28 @@ export function Contact() {
   const [open, setOpen] = useState(false);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const elements = document.querySelectorAll(".reveal");
+
+    elements.forEach((el) => {
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            el.classList.add("in");
+          } else {
+            el.classList.remove("in");
+          }
+        },
+        { threshold: 0.15 }
+      );
+      io.observe(el);
+      observers.push(io);
+    });
+
+    return () => observers.forEach((io) => io.disconnect());
+  }, []);
 
   const {
     register,
@@ -84,18 +106,24 @@ export function Contact() {
   return (
     <section id="contact" className="relative px-6 py-32 sm:px-12 sm:py-48">
       <div className="mx-auto max-w-7xl">
-        <div className="reveal mb-4 text-xs tracking-[0.5em] text-white/40">05 — contact</div>
-        <WordReveal
-          as="h2"
-          text="let's build something quiet, together."
-          className="block max-w-4xl text-[clamp(2rem,7vw,6rem)] leading-[1.02] text-white"
-          style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
-        />
+        <div className="mb-4 text-xs tracking-[0.5em] text-white/40">
+          05 — contact
+        </div>
+
+        <div className="max-w-4xl">
+          <SplitText
+            as="h2"
+            text="wanna talk more? hit me up here."
+            className="text-[clamp(2rem,7vw,6rem)] leading-[1.02] text-white tracking-tighter"
+            style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
+            staggerSpeed={20}
+          />
+        </div>
 
         <div className="mt-20 flex flex-wrap items-center gap-6">
           <button
             onClick={() => setOpen(true)}
-            className="group relative overflow-hidden rounded-full border border-white/30 bg-white px-8 py-4 text-sm text-black transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_0_60px_rgba(255,255,255,0.35)] sm:px-10 sm:py-5 sm:text-base"
+            className="group relative overflow-hidden rounded-full border border-white/30 bg-white px-8 py-4 text-sm text-black transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_0_60px_rgba(255,255,255,0.35)] sm:px-10 sm:py-5 sm:text-base cursor-pointer"
             style={{ fontWeight: 400 }}
           >
             <span className="relative z-10 inline-flex items-center gap-3">
@@ -105,9 +133,9 @@ export function Contact() {
 
           <div className="flex items-center gap-2">
             {[
-              { icon: "bi-github", href: "https://github.com/bntangishere", label: "github" },
-              { icon: "bi-instagram", href: "https://instagram.com/bntangishere", label: "instagram" },
-              { icon: "bi-linkedin", href: "https://linkedin.com/in/bntangishere", label: "linkedin" },
+              { icon: "bi-github", href: "https://github.com/bntgwen", label: "github" },
+              { icon: "bi-instagram", href: "https://instagram.com/bntangaaulia", label: "instagram" },
+              { icon: "bi-linkedin", href: "https://www.linkedin.com/in/bntang-a-8a97843a6?utm_source=share_via&utm_content=profile&utm_medium=member_android", label: "linkedin" },
             ].map((s) => (
               <a
                 key={s.label}
@@ -125,13 +153,12 @@ export function Contact() {
 
         <div className="reveal mt-32 border-t border-white/10 pt-10 text-xs text-white/40">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <span>© {new Date().getFullYear()} bntangishere — all rights reserved.</span>
-            <span>made quietly, with care.</span>
+            <span>© {new Date().getFullYear()} bntang — is here</span>
+            <span>made by me, bntang</span>
           </div>
         </div>
       </div>
 
-      {/* Modal */}
       <div
         className="fixed inset-0 z-[90] flex items-center justify-center p-4 transition-all duration-500"
         style={{
@@ -152,7 +179,7 @@ export function Contact() {
         >
           <button
             onClick={closeModal}
-            className="absolute -top-3 -right-3 grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-black text-white/80 transition-colors hover:bg-white hover:text-black"
+            className="absolute -top-3 -right-3 grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-black text-white/80 transition-colors hover:bg-white hover:text-black cursor-pointer"
             aria-label="close"
           >
             <i className="bi bi-x-lg text-sm" />
@@ -223,7 +250,7 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={sending}
-                className="flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm text-black transition-all duration-300 hover:scale-[1.02] disabled:opacity-60"
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm text-black transition-all duration-300 hover:scale-[1.02] disabled:opacity-60 cursor-pointer"
                 style={{ fontWeight: 400 }}
               >
                 {sending && (

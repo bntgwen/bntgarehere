@@ -1,41 +1,41 @@
 import { useRef, useCallback } from "react";
-import { Monitor, Laptop, Camera, AudioLines, Pen, type LucideIcon } from "lucide-react";
-import { WordReveal } from "./WordReveal";
+import { SiFigma } from "react-icons/si";
+import { VscCode } from "react-icons/vsc";
+import { SlCursor, SlScreenDesktop } from "react-icons/sl";
+import { SplitText } from "./SplitText";
 
 interface GalleryImg { src: string; ratio: string; }
 
-// pinterest-like: a mix of tall, wide, square, big, small
 const images: GalleryImg[] = [
-  { src: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&q=80", ratio: "3/4" },   // tall
-  { src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80", ratio: "4/3" },   // wide
-  { src: "https://images.unsplash.com/photo-1496180470114-6ef490f3ff22?w=1200&q=80", ratio: "1/1" },   // square small
-  { src: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=1200&q=80", ratio: "2/3" },   // tall
-  { src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=80", ratio: "16/9" },  // very wide
-  { src: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80", ratio: "1/1" },
-  { src: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80", ratio: "3/5" },   // very tall
-  { src: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1600&q=80", ratio: "5/4" },
-  { src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80", ratio: "4/5" },
-  { src: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1600&q=80", ratio: "16/10" },
-  { src: "https://images.unsplash.com/photo-1493514789931-586cb221d7a7?w=1200&q=80", ratio: "2/3" },
-  { src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=1200&q=80", ratio: "1/1" },
+  { src: "/images/67w.jpeg", ratio: "3/4" },
+  { src: "/images/sdroof.jpeg", ratio: "4/3" },
+  { src: "/images/landscapemosque.jpeg", ratio: "1/1" },
+  { src: "/images/mosque.jpeg", ratio: "2/3" },
+  { src: "/images/lampagain.jpeg", ratio: "16/9" },
+  { src: "/images/sd.jpeg", ratio: "1/1" },
+  { src: "/images/lampcropped.jpeg", ratio: "3/5" },
+  { src: "/images/roofagainandagain.jpeg", ratio: "5/4" },
+  { src: "/images/idek.jpeg", ratio: "16/10" },
+  { src: "/images/roofandcables.jpeg", ratio: "2/3" },
+  { src: "/images/roofagain.jpeg", ratio: "1/1" },
 ];
 
-interface GearItem { label: string; meta: string; icon: LucideIcon; }
+interface GearItem { 
+  label: string; 
+  meta: string; 
+  icon: string | React.ComponentType<{ size?: number; className?: string }>; 
+}
 
 const hardware: GearItem[] = [
-  { label: "macbook pro 16″ m3", meta: "primary machine", icon: Laptop },
-  { label: "apple studio display", meta: "5k retina", icon: Monitor },
-  { label: "leica q3", meta: "compact camera", icon: Camera },
-  { label: "moog matriarch", meta: "analog synth", icon: AudioLines },
-  { label: "wacom intuos pro", meta: "pen tablet", icon: Pen },
+  { label: "Thinkpad X260", meta: "everyday use", icon: "bi-laptop" },
+  { label: "Custom Desktop PCs", meta: "Intel Core i5 Gen 4 w/ Nvidia GT 730 2GB", icon: SlScreenDesktop },
+  { label: "Vivo Y12S", meta: "main phone", icon: "bi-phone-fill" },
 ];
 
 const software: GearItem[] = [
-  { label: "figma", meta: "interface design", icon: Pen },
-  { label: "vs code", meta: "code editor", icon: Laptop },
-  { label: "blender", meta: "3d creation", icon: Monitor },
-  { label: "ableton live", meta: "music production", icon: AudioLines },
-  { label: "adobe lightroom", meta: "photo editing", icon: Camera },
+  { label: "figma", meta: "for designing (sometimes)", icon: SiFigma },
+  { label: "vs code", meta: "fav text editor (current)", icon: VscCode },
+  { label: "cursor", meta: "best text editor (just once)", icon: SlCursor },
 ];
 
 function GlowCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -60,11 +60,13 @@ export function Gallery() {
     <section id="gallery" className="relative px-6 py-32 sm:px-12 sm:py-48">
       <div className="mx-auto max-w-7xl">
         <div className="reveal mb-4 text-xs tracking-[0.5em] text-white/40">04 — gallery & gear</div>
-        <WordReveal
+        
+        <SplitText
           as="h2"
           text="fragments of taste."
-          className="block max-w-3xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white"
+          className="block max-w-3xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white tracking-tighter"
           style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
+          staggerSpeed={20}
         />
 
         <div className="mt-20 columns-2 gap-4 sm:columns-3 lg:columns-4 [column-fill:_balance]">
@@ -95,11 +97,14 @@ export function Gallery() {
               <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">{group.title}</div>
               <div className="grid grid-cols-1 gap-px border border-white/10 sm:grid-cols-2 lg:grid-cols-3 bg-white/10">
                 {group.items.map((g) => {
-                  const Icon = g.icon;
                   return (
                     <GlowCard key={g.label} className="border-0">
-                      <div className="card-icon">
-                        <Icon size={20} strokeWidth={1.5} />
+                      <div className="card-icon flex items-center justify-center">
+                        {typeof g.icon === "string" ? (
+                          <i className={`bi ${g.icon} text-lg`} />
+                        ) : (
+                          <g.icon size={20} />
+                        )}
                       </div>
                       <div className="card-label">{g.label}</div>
                       <div className="card-meta">{g.meta}</div>

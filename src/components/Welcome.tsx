@@ -1,36 +1,32 @@
-import { useRef, useCallback } from "react";
-import {
-  Camera, Moon, Headphones, Mountain, PenTool, Sliders,
-  FileCode2, Atom, Globe, Layers, Palette, Server,
-  Terminal, Database, Paintbrush, Box, Cuboid, Activity,
-  type LucideIcon,
-} from "lucide-react";
-import { WordReveal } from "./WordReveal";
+import { useRef, useCallback, useEffect } from "react";
+import { SiTypescript, SiReact, SiJavascript, SiTailwindcss, SiNodedotjs, SiLaravel, SiPostgresql } from "react-icons/si";
+import { FaJava } from "react-icons/fa";
+import { SplitText } from "./SplitText"; 
 
-interface Item { label: string; meta: string; icon: LucideIcon; }
+interface Item { 
+  label: string; 
+  meta: string; 
+  icon: string | React.ComponentType<{ size?: number; className?: string }>; 
+}
 
 const hobbies: Item[] = [
-  { label: "shooting film", meta: "photography", icon: Camera },
-  { label: "late-night code", meta: "development", icon: Moon },
-  { label: "lo-fi playlists", meta: "music", icon: Headphones },
-  { label: "weekend hikes", meta: "nature", icon: Mountain },
-  { label: "writing essays", meta: "prose", icon: PenTool },
-  { label: "tinkering with synths", meta: "sound", icon: Sliders },
+  { label: "take a scene", meta: "took memories to my pocket", icon: "bi-camera-fill" },
+  { label: "take a rest", meta: "sleep well baby", icon: "bi-moon-fill" },
+  { label: "listen to something", meta: "pop, rap, jazz", icon: "bi-headphones" },
+  { label: "take a game", meta: "valorant, minecraft, etc", icon: "bi-joystick" },
+  { label: "read to something", meta: "manga, science, novel, etc", icon: "bi-book-half" },
+  { label: "watching peak", meta: "anime, movies, series, etc", icon: "bi-tv" },
 ];
 
 const tech: Item[] = [
-  { label: "typescript", meta: "language", icon: FileCode2 },
-  { label: "react", meta: "framework", icon: Atom },
-  { label: "next.js", meta: "framework", icon: Globe },
-  { label: "tanstack", meta: "data", icon: Layers },
-  { label: "tailwind", meta: "styling", icon: Palette },
-  { label: "node", meta: "runtime", icon: Server },
-  { label: "python", meta: "language", icon: Terminal },
-  { label: "postgres", meta: "database", icon: Database },
-  { label: "figma", meta: "design", icon: Paintbrush },
-  { label: "webgl", meta: "graphics", icon: Box },
-  { label: "blender", meta: "3d", icon: Cuboid },
-  { label: "framer motion", meta: "animation", icon: Activity },
+  { label: "typescript", meta: "good but sometimes not", icon: SiTypescript }, 
+  { label: "reactJS", meta: "favourite anytime", icon: SiReact },           
+  { label: "JavaScript", meta: "good enough", icon: SiJavascript },       
+  { label: "tailwind CSS", meta: "best stylist ever", icon: SiTailwindcss }, 
+  { label: "nodeJS", meta: "good peak like it", icon: SiNodedotjs },         
+  { label: "postgreSQL", meta: "secure and simple", icon: SiPostgresql },     
+  { label: "Java", meta: "not my type but ok", icon: FaJava },      
+  { label: "Laravel", meta: "greatest of all time baby", icon: SiLaravel },    
 ];
 
 function GlowCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -51,64 +47,108 @@ function GlowCard({ children, className = "" }: { children: React.ReactNode; cla
 }
 
 export function Welcome() {
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const elements = document.querySelectorAll(".reveal-grid-cards");
+
+    elements.forEach((el) => {
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            el.classList.add("in");
+          } else {
+            el.classList.remove("in");
+          }
+        },
+        { threshold: 0.15 }
+      );
+      io.observe(el);
+      observers.push(io);
+    });
+
+    return () => observers.forEach((io) => io.disconnect());
+  }, []);
+
   return (
-    <section id="welcome" className="relative px-6 py-32 sm:px-12 sm:py-48">
+    <section id="welcome" className="relative px-4 py-24 sm:px-12 sm:py-40 overflow-hidden">
       <div className="mx-auto max-w-7xl">
-        <div className="reveal mb-4 text-xs tracking-[0.5em] text-white/40">01 — welcome</div>
+        <div className="reveal mb-6 text-xs tracking-[0.5em] text-white/40">01 — welcome</div>
 
-        <WordReveal
-          as="h2"
-          text="a designer who codes, a developer who draws."
-          className="block max-w-4xl text-[clamp(2rem,6vw,5rem)] leading-[1.05] text-white"
-          style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
-        />
+        <div className="mb-24 lg:mb-32 max-w-4xl">
+          <SplitText
+            as="h2"
+            text="i just wanna share what i like"
+            className="text-[clamp(2.5rem,6.5vw,5.5rem)] leading-[1.05] text-white tracking-tighter"
+            style={{ fontFamily: "Poppins, sans-serif", fontWeight: 100 }}
+            staggerSpeed={20}
+          />
+        </div>
 
-        <div className="mt-24 grid grid-cols-1 gap-16 md:grid-cols-12">
-          <div className="reveal md:col-span-5 md:col-start-2">
-            <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">about</div>
-            <WordReveal
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 items-start">
+          
+          <div className="lg:col-span-4 lg:col-start-2 flex flex-col gap-6">
+            <div className="text-[12px] tracking-[0.4em] text-white/40">about</div>
+            <SplitText
               as="p"
-              text="i build quiet, considered interfaces. by day, i ship products with care. by night, i sketch, write, and chase the kind of details no one notices — but everyone feels."
-              className="text-lg leading-relaxed text-white/80 sm:text-xl"
+              text="hello, i am a junior developer exploring computing and ai. i focus deeply on information technology and computer engineering."
+              className="text-lg leading-relaxed text-white/90 tracking-wide"
               style={{ fontWeight: 200 }}
-              stagger={28}
+              staggerSpeed={8}
+            />
+            <SplitText
+              as="p"
+              text="i love breaking down complex systems into quiet digital interfaces. chasing small details drives my daily curiosity. i hope to bridge human intent and machine intelligence."
+              className="text-base leading-relaxed text-white/70 tracking-wide"
+              style={{ fontWeight: 200 }}
+              staggerSpeed={6}
             />
           </div>
 
-          <div className="reveal md:col-span-5 md:col-start-8">
-            <div className="mb-6 text-[10px] tracking-[0.4em] text-white/40">hobbies</div>
-            <div className="grid grid-cols-1 gap-px border border-white/10 bg-white/10 sm:grid-cols-2">
-              {hobbies.map((h) => {
-                const Icon = h.icon;
-                return (
-                  <GlowCard key={h.label} className="border-0">
-                    <div className="card-icon">
-                      <Icon size={20} strokeWidth={1.5} />
-                    </div>
-                    <div className="card-label">{h.label}</div>
-                    <div className="card-meta">{h.meta}</div>
-                  </GlowCard>
-                );
-              })}
+          <div className="lg:col-span-7 flex flex-col gap-6">
+            <div>
+              <div className="text-[10px] tracking-[0.4em] text-white/40 mb-2">hobbies & things</div>
+              <SplitText 
+                as="p" 
+                text="what i do every time" 
+                className="text-lg text-white/60"
+                staggerSpeed={15}
+              />
+            </div>
+            <div className="reveal-grid-cards grid grid-cols-1 gap-px border border-white/10 bg-white/10 sm:grid-cols-2">
+              {hobbies.map((h) => (
+                <GlowCard key={h.label} className="border-0">
+                  <div className="card-icon">
+                    {typeof h.icon === "string" ? <i className={`bi ${h.icon} text-lg`} /> : <h.icon size={20} />}
+                  </div>
+                  <div className="card-label tracking-wide">{h.label}</div>
+                  <div className="card-meta">{h.meta}</div>
+                </GlowCard>
+              ))}
             </div>
           </div>
         </div>
 
-        <div className="reveal mt-32">
-          <div className="mb-8 text-[10px] tracking-[0.4em] text-white/40">stack</div>
-          <div className="grid grid-cols-1 gap-px border border-white/10 bg-white/10 sm:grid-cols-3 lg:grid-cols-4">
-            {tech.map((t) => {
-              const Icon = t.icon;
-              return (
-                <GlowCard key={t.label} className="border-0">
-                  <div className="card-icon">
-                    <Icon size={20} strokeWidth={1.5} />
-                  </div>
-                  <div className="card-label">{t.label}</div>
-                  <div className="card-meta">{t.meta}</div>
-                </GlowCard>
-              );
-            })}
+        <div className="mt-40 flex flex-col gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.4em] text-white/40 mb-2">stack & skills</div>
+            <SplitText 
+              as="p" 
+              text="what i use every work" 
+              className="text-lg text-white/60" 
+              staggerSpeed={15}
+            />
+          </div>
+          
+          <div className="reveal-grid-cards grid grid-cols-1 gap-px border border-white/10 bg-white/10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {tech.map((t) => (
+              <GlowCard key={t.label} className="border-0">
+                <div className="card-icon">
+                  {typeof t.icon === "string" ? <i className={`bi ${t.icon} text-lg`} /> : <t.icon size={20} />}
+                </div>
+                <div className="card-label tracking-wide">{t.label}</div>
+                <div className="card-meta">{t.meta}</div>
+              </GlowCard>
+            ))}
           </div>
         </div>
       </div>
